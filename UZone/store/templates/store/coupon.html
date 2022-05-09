@@ -1,0 +1,37 @@
+{% extends 'users/partnerBase.html' %} 
+{% load static %}
+{% block content %}
+
+<a href="{% url 'store:addCoupon' %}" class="btn btn-secondary" style="margin-left: 10px;">Add</a>
+
+<div class="container">
+  {% if messages %}
+  {% for message in messages %}
+      <div class="text-center alert alert-{{ message.tags }} alert-dismissible">
+          {{ message|safe }}
+      </div>
+  {% endfor %}
+  {% endif %}
+  <div class="row">
+    {% for coupon in coupons %}
+    <div class="col-md-3 mb-3">
+          <a href="">
+              <div class="card">
+                  <div class="card-header">Coupon code : {{coupon.code}}</div>
+                  <p class="card-text">Discount:{{coupon.discount_percentage}}</p>
+                  <div class="card-body">{{coupon.desc}}</div>
+                  <div class="card-footer mt-auto ">
+                    <a href="/deleteCoupon/{{coupon.pk}}/">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </a>
+                  </div>
+              </div>
+          </a>
+      </div>
+      {% endfor %}
+      <br><br>
+
+  </div>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,37 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %} <title>Order Confirmation</title> {% endblock %}
+
+
+{% block bread-page %}
+<p class="bread-page body-white">Confirmation</p>
+{% endblock %}
+
+{% block bread-head %}
+<p class="bread-head heading-2-white">#Confirmation</p>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="content-box">
+
+        <div class="order-confirm-details pb-5 ms-4">
+
+            <p class="heading-1-black mt-3 confirm-order-id">Something went wrong with the order, Please try again!!!
+            </p>
+
+            <div class="row mt-4">
+                <a href="#" class="simple-btn confirm-action-btn heading-3-regular-white text-center">
+                    View All Orders
+                </a>
+                <a href="#" class="simple-btn confirm-action-btn heading-3-regular-white text-center ms-4">
+                    Go To Cart
+                </a>
+            </div>
+        </div>
+
+
+    </section>
+</div>
+
+{% endblock %}

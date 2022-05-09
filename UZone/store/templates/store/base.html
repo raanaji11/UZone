@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UZone</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+</head>
+
+<body style="background-color:rgb(206, 202, 202)">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">UZone</a>
+
+      <form method="get" action="/" class="form-inline my-2 pl-5 ml-5 my-lg-0">
+        <input class="form-control mr-sm-2" name="search" type="search" id="search" placeholder="search"
+          aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+      <form action="{% url 'store:sort' %}" method="get">
+        <select name="sort" id="sort" class="ml-5" style="font-size: 12px;">
+          <option value=""></option>
+          <option name='sort' value="low">Low to High</option>
+          <option name='sort' value="high">High to Low</option>
+          <!-- <option name='sort' value="high">Price range</option> -->
+        </select>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filter</button>
+      </form>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          {% if request.user.is_authenticated %}
+
+          <li class="nav-item">
+            <a class="nav-link active mr-5" aria-current="page" href="{% url 'users:profile' %}"
+              style="font-size:20px;"><i class="fa fa-user-circle" aria-hidden="true"></i> Welcome<stong>
+                {{request.user.first_name}}</stong></a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'store:wishlist' %}">
+              <i class="fa fa-heart my-3 mr-2" style="color:rgb(202, 199, 199)" data-toggle="tooltip"
+                data-placement="top" aria-hidden="true" title="Whishlist"></i>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'store:cart_detail' %}">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'store:order' %}" style="font-size:17px;">Order</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:logout' %}" style="font-size:17px;">Logout</a>
+          </li>
+
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:signup' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</body>
+
+</html>
+
+{% block content %}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

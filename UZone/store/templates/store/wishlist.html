@@ -1,0 +1,59 @@
+
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{ message }}
+</p>
+{% endfor %}
+{% endif %}
+{% if wishlist %}
+<table class="table table-hover">
+    <thead>
+     <tr>
+        <th scope="col">#</th>
+        <th scope="col"></th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col"></th>
+        <th scope="col"></th> 
+    </tr>
+    </thead>
+    {% for item in wishlist %}
+    <tbody>
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td><img src="{{item.product.image.url}}" style="height:100px" alt=""></td>
+        <td>{{item.product.name}}</td>
+        <td>{{item.product.price}}</td>
+        <td><a href="{% url 'store:cart_add' item.product.id %}" class='btn btn-primary'> Add to cart</a></td>
+        <td><a href="{% url 'store:removefromwishlist' item.id %}" class='btn btn-danger'data-toggle="tooltip" data-placement="top" aria-hidden="true" title="Remove from Whishlist"> Remove</a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% else %}
+<script>    
+    Swal.fire({
+      title: '<strong>Empty</strong>',
+      icon: 'info',
+      html:
+        'Nothing in wishlist!',
+      showCloseButton: true,
+
+      focusConfirm: false,
+     
+      
+    })
+
+    document.querySelector(".swal2-confirm").addEventListener("click", function() {
+      window.location.href='http://127.0.0.1:8000/';
+});
+  </script>
+
+{% endif %}
+{% endblock content %}

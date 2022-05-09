@@ -1,0 +1,26 @@
+{% extends 'users/partnerBase.html' %} 
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="text-center alert alert-{{ message.tags }} alert-dismissible">
+        {{ message|safe }}
+    </div>
+{% endfor %}
+{% endif %}
+{{form.errors}}
+<form action ="" method="POST">
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4 ml-5 mt">Update Product</legend>
+    </fieldset><div class = "container m-5">
+    {% csrf_token %}
+    {{form|crispy}}
+
+    <input type="submit"  value="Update">
+</form>
+{% endblock content %}
+
+

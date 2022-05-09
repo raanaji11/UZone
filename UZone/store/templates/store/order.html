@@ -1,0 +1,56 @@
+{% extends 'store/base.html' %} 
+{% load static %}
+
+{% block content %}
+<main>
+
+{% for order, orderlines in result.items %}
+<div class="bg-white">
+<h6 class="bg-warning mb-0 py-2 px-5 w-25" id="date"> Date - {{order.date}} </h6>
+<table class="table table-hover table-secondary">
+  <thead>
+    <tr class="bg-info" style="font-size: 16px;">
+      <th scope="col">{{forloop.counter}}.</th>
+      <th scope="col">Item</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  
+  {% for orderline in orderlines %}
+
+  <tbody>
+    <tr>
+      <td></td>
+      <td scope="row">{{orderline.product.name}}</td>
+      <td>{{orderline.product.price}}</td>
+      <td>{{orderline.quantity}}</td>
+      <td></td>
+    </tr>
+    {% endfor %}
+   
+  
+    <tr style="background-color: rgba(71, 129, 255, 0.282); font-size: 14px;">
+      <th scope="row"></th>
+      <td><b>Total</b></td>
+      <td><b>{{order.amount}}</b></td>
+      <td><b>Status</b></td>
+      <td><b>{{order.status}}</b></td>
+    </tr>
+    
+  </tbody>
+
+
+</table>
+
+ 
+{% endfor %}
+
+          
+</div>
+</main>
+{% endblock content %}
+
+

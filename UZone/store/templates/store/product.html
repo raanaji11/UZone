@@ -1,0 +1,72 @@
+{% extends 'users/partnerBase.html' %}
+{% load static %}
+{% block content %}
+
+<a href="/addProduct" class="btn btn-secondary" style="margin-left: 10px;">Add</a>
+
+<section class="container text-center">
+  {% if messages %}
+  {% for message in messages %}
+  <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{ message }}
+  </p>
+  {% endfor %}
+  {% endif %}
+
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-3 mb-5">
+
+      <a href="/productDetail/{{product.pk}}">
+        <div class="card">
+          <div class="card-header">{{product.product}}<span></div>
+          <img class="card-img-top" src="{{ product.image.url }}" style="height:200px" alt="Product image">
+          <div class="card-body py-0">
+            <h5 class="card-title">
+              price:₹{{product.price}}
+            </h5>
+          </div>
+          <div class="card-footer mt-auto ">
+            <a href="/deleteProduct/{{product.pk}}">
+              <i class="fa fa-trash fa-2x" style='font-size:15px'></i>
+            </a>
+            <a href="/updateProduct/{{product.pk}}">
+              <i class='fas fa-edit' style='font-size:15px'></i>
+            </a>
+
+          </div>
+        </div>
+      </a>
+    </div>
+
+    {% endfor %}
+
+  </div>
+  </div>
+  <div class="mx-auto">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.number}}">{{page_obj.number}}</a></li>
+        {% if page_obj.has_next %}
+
+        <li class="page-item">
+          <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</section>
+{% endblock content %}

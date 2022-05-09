@@ -1,0 +1,124 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Order Summary -->
+<div class="container mt-5 ">
+    <div class="row ml-3">
+        <div class="col">
+            <h4>Billing Detail:</h4>
+        </div class="row ">
+        <div class="col">
+            <h4>Order Summary:</h4>
+        </div>
+    </div>
+    <!-- Billing Detail -->
+    <div class="row mt-4 mb-4 ml-4 mr-4">
+        <div class="col-md-6 " style="background-color:rgb(247, 238, 238)">
+            <div class="my-4">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Name</label>
+                        <input type="text" readonly class="form-control"
+                            value="{{request.user.first_name}}  {{request.user.last_name}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Mobile</label>
+                        <input type="text" readonly class="form-control" value="{{address.mobile}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Email</label>
+                    <input type="text" readonly class="form-control" value="{{request.user.email}}">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Address</label>
+                    <input type="text" readonly class="form-control" value="{{address.address}}">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" readonly class="form-control" value="{{address.city}}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputState">State</label>
+                        <input type="text" readonly class="form-control" value="{{address.state}}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" readonly class="form-control" value="{{address.zip_code}}">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- summary -->
+
+        <div class="col-md-4  ml-5" style="background-color:rgb(238, 238, 227)">
+            <table class="table table-borderless table-sm table-secondary my-4">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for orderline in orderlines %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{orderline.product.name}}</td>
+                        <td>{{orderline.product.price}}</td>
+                        <td>{{orderline.quantity}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="table-primary">
+                    <th scope="row">Total</th>
+                    <th scope="row"></th>
+                    <th scope="row"></th>
+                    <th scope="row">{{order.amount}}</th>
+
+
+                </tfoot>
+            </table>
+
+            <button class="btn btn-success" id="rzp-button1" style="float:right">Proceed to pay</button>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{razorpay_merchant_id}}", // Enter the Key ID generated from the Dashboard
+        "amount": "{{final_price}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "UZone",
+        "description": "Test Transaction",
+        "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 2
+        "callback_url": "{{callback_url}}",
+
+
+        "prefill": {
+            "name": "{{request.user.firstname}}",
+            "email": "{{request.user.email}}",
+            "contact": "{{request.user.mobile}}"
+        },
+
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+
+    document.getElementById('rzp-button1').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+{% endblock %}

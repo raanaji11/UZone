@@ -1,0 +1,18 @@
+{% extends 'store/base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form action ="" method="POST" enctype="multipart/form-data">
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4 ml-5 mt">Update Profile</legend>
+    </fieldset><div class = "container m-5">
+    {% csrf_token %}
+    {{form|crispy}}
+
+    <input type="submit"  value="Update">
+</form>
+{% endblock content %}
+
+

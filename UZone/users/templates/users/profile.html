@@ -1,0 +1,60 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Order Summary -->
+<div class="container mt-5 ">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ message }}
+    </p>
+    {% endfor %}
+    {% endif %}
+    <!-- Billing Detail -->
+    <div class="row">
+        <div class="mx-auto" style="background-color:rgb(247, 238, 238)">
+            <div class="my-4 ml-4 mr-4 mb-4 max-auto">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Photo</label>
+                        {% if request.user.image %}
+                        <img class="card-img-top" src="{{request.user.image.url}}" style="height:90px; width:90px" alt="Product image">
+                        {% else %}
+                        <img class="card-img-top" src="{% static 'images/user.webp' %}" style="height:90px; width:90px"
+                            alt="Product image">
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Full Name</label>
+                        <input type="text" readonly class="form-control"
+                            value=" {{request.user.first_name}} {{request.user.last_name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Email</label>
+                    <input type="text" readonly class="form-control" value="{{request.user.email}}">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Mobile</label>
+                    <input type="text" readonly class="form-control" value=" {{request.user.mobile}}">
+                </div>
+                <div class="form-group">
+                    <label for="inputCity">Role</label>
+                    <input type="text" readonly class="form-control" value=" {{request.user.role}}">
+                </div>
+                <div class="form-group mb-3">
+                    <a href="{% url 'users:updateprofile' request.user.id %}" class="btn btn-success"
+                        style="float:right">Update</a>
+                </div>
+                <div class="form-group">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

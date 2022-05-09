@@ -1,0 +1,67 @@
+{% extends 'users/partnerBase.html' %} 
+{% load static %} 
+{% block content %}
+
+<section class="container text-center">
+  {% if messages %}
+  {% for message in messages %}
+  <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      {{ message }}
+  </p>
+  {% endfor %}
+{% endif %}
+
+<br><br>
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{% url 'store:product' %}">  
+            <div class="card">
+                <img class="card-img-top" src="{% static 'images/product.jpg' %}" alt="Product image">
+                <div class="card-body">
+                    <h5 class="card-title ">
+                    <b>Product</b>
+                    </h5>
+                    Add and view your products here -->
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="{% url 'store:category' %}">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'images/category.png' %}" alt="Category image">
+                <div class="card-body">
+                    <h5 class="card-title ">
+                    Category
+                    </h5>
+                    Add and view your categories here.
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3" >
+        <a href="{% url 'store:coupon' %}">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'images/coupon.jpg' %}" style=" height:135px" alt="Coupon image">
+                <div class="card-body">
+                    <h5 class="card-title ">
+                    Coupon
+                    </h5>
+                    Add and view your coupons here.
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-1">
+    </div>
+    
+</div>
+</section>
+{% endblock content %}

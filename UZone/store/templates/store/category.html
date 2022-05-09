@@ -1,0 +1,39 @@
+{% extends 'users/partnerBase.html' %} 
+{% load static %}
+{% block content %}
+
+<a href="" class="btn btn-secondary" style="margin-left: 10px;">Add</a>
+
+<section class="container">
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ message }}
+    </p>
+    {% endfor %}
+{% endif %}
+    <div class="row">
+        
+        {% for category in categories %}
+        <div class="col-md-3 mb-5">
+            <a href="/product/?category={{category.id}}">
+                <div class="card">
+                    <div class="card-header"><a href="/product/?category={{category.id}}">
+                        {{category.category}}</a>
+                    </div>
+                    <img class="card-img-top" src="{{ category.image.url }}" style=" height:145px" alt="Card image cap">
+                    <!-- <div class="card-body">
+                    </div> -->
+                    <div class="card-footer mt-auto "><a href="#">
+                        <i class="fa fa-trash fa-2x"></i></a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        <br><br><br>
+    </div>
+</section>
+<br><br>
+{% endblock content %}

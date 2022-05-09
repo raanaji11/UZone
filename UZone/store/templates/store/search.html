@@ -1,0 +1,65 @@
+{% extends 'store/base.html' %}
+{% block content %}
+{% load c %}
+<!--body-->
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div id='products' class="col-lg-9 mx-auto">
+            <div class="row mx-auto">
+                {% if products %}
+                {% for product in products %}
+
+                <div class="card mx-auto mb-3" style="width: 18rem;">
+
+                        <img src="{{product.image.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-title target">{{product.name}} </p>
+                            <p class="card-text"><b>$ {{product.price}}</b></p>
+                        </div>
+                        <div class="card-footer p-0 no-gutters">
+                            {% if product|in_cart:request.session.cart %}
+                            <div class="row no-gutters">
+                                <div class="col-2 ">
+                                    <a href="{% url 'store:item_decrement' product.id %}"
+                                        class="btn btn-block btn-light border-right">-</a>
+                                </div>
+                                <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart
+                                </div>
+                                <div class="col-2 ">
+                                    <a href="{% url 'store:item_increment' product.id %}"
+                                        class="btn btn-block btn-light border-right">
+                                        +
+                                    </a>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="btn-block">
+                                <a href="{% url 'store:cart_add' product.id %}"
+                                    class="float-right btn btn-light form-control">
+                                    Add To Cart
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+
+
+                {% endfor %}
+                {% else %}
+                <div class="m-5 p-5">
+
+                    <h5 class="text-center" class="w-100">No results found for<b> "{{q}}".</b></h5>
+                    <br>
+                    <p>Make sure that all words are spelled correctly.
+                        Try different keywords.</p>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'store/base.html' %}
+{% load cart_tag %}
+{% load c %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+  {% if messages %}
+  {% for message in messages %}
+  <p class="alert alert-dismissable {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{ message }}
+  </p>
+  {% endfor %}
+  {% endif %}
+  <div class="row">
+    <!--filter-->
+    <div class="col-lg-3 mx-auto">
+      <div class="list-group">
+        <a href="/" class="list-group-item list-group-item-action">All Products</a>
+        {% for category in categories %}
+        <a href="/?category={{category.id}}" class="list-group-item list-group-item-action">
+          {{category.category}}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!--All products-->
+    <div id='products' class="col-lg-9 mx-auto">
+      <div class="row mx-auto">
+
+        {% for product in page_obj %}
+        <div class="card mx-auto mb-3" style="width: 18rem;">
+          <a>
+            <img src="{{product.image.url}}" style="height:200px" class="card-img-top" alt="...">
+            <div class="card-body">
+              <a href="/addtowishlist/?product={{product.id}}">
+                <i class="fa fa-heart" style="color:rgb(105,105,105)" data-toggle="tooltip" data-placement="top"
+                  aria-hidden="true" title="Add to Whishlist"></i>
+              </a>
+              <p class="card-title target">{{product.name}} </p>
+              <p class="card-text"><b>$ {{product.price}}</b></p>
+            </div>
+            <div class="card-footer p-0 no-gutters">
+              {% if product|in_cart:request.session.cart %}
+              <div class="row no-gutters">
+                <div class="col-2 ">
+                  <a href="{% url 'store:item_decrement' product.id %}"
+                    class="btn btn-block btn-light border-right">-</a>
+                </div>
+                <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
+                <div class="col-2 ">
+                  <a href="{% url 'store:item_increment' product.id %}" class="btn btn-block btn-light border-right">
+                    +
+                  </a>
+                </div>
+              </div>
+              {% else %}
+              <div class="btn-block">
+                <a href="{% url 'store:cart_add' product.id %}" class="float-right btn btn-light form-control">
+                  Add To Cart
+                </a>
+              </div>
+              {% endif %}
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mx-auto">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+          <li class="page-item"><a class="page-link" href="">{{page_obj.number}}</a></li>
+          {% if page_obj.has_next %}
+
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock content %}

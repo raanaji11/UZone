@@ -1,0 +1,26 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %} <title>Order Confirmation</title> {% endblock %}
+
+
+{% block bread-page %}
+<p class="bread-page body-white">Confirmation</p>
+{% endblock %}
+
+{% block bread-head %}
+<p class="bread-head heading-2-white">#Confirmation</p>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="content-box">
+        <script>
+            Swal.fire(
+                'Placed!',
+                'Your order has been placed!',
+                'success'
+            )
+        </script>
+    </section>
+</div>
+{% endblock %}
